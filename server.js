@@ -22,14 +22,16 @@ app.use(express.static('public'));
 app.post('/generate', upload.fields([
     { name: 'photos', maxCount: 100 },
     { name: 'csvFile', maxCount: 1 },
-    { name: 'logo', maxCount: 1 }
+    { name: 'logo', maxCount: 1 },
+    { name: 'fontFile', maxCount: 1 }
 ]), async (req, res) => {
     try {
-        const { schoolName, title, subtitle, managerDetails, theme, size, watermark } = req.body;
+        const { schoolName, title, subtitle, managerDetails, theme, size, watermark, exportFormat } = req.body;
         
         const photos = req.files['photos'] || [];
         const csvFile = req.files['csvFile'] ? req.files['csvFile'][0] : null;
         const logo = req.files['logo'] ? req.files['logo'][0] : null;
+        const fontFile = req.files['fontFile'] ? req.files['fontFile'][0] : null;
 
         if (photos.length === 0) {
             return res.status(400).send('Please upload at least one photo.');
@@ -57,6 +59,7 @@ app.post('/generate', upload.fields([
             photos,
             csvData,
             logoPath: logo ? logo.path : null,
+            fontPath: fontFile ? fontFile.path : null,
             schoolName,
             title,
             subtitle,
@@ -64,36 +67,48 @@ app.post('/generate', upload.fields([
             theme,
             size,
             watermark,
+            exportFormat: exportFormat || 'jpg',
             outputDir
         });
 
-        // Create Zip
-        const zipPath = path.join(__dirname, 'banners.zip');
-        const output = fs.createWriteStream(zipPath);
-        const archive = archiver('zip', { zlib: { level: 9 } });
-
-        output.on('close', function() {
-            res.download(zipPath, 'Felicitation_Banners.zip', () => {
-                // Cleanup after download
-                if(fs.existsSync(zipPath)) fs.unlinkSync(zipPath);
-                for(const file of generatedFiles) {
-                    if(fs.existsSync(file.path)) fs.unlinkSync(file.path);
-                }
+        if (exportFormat === 'pdf' || exportFormat === 'gif') {
+            const singleFile = generatedFiles[0];
+            res.download(singleFile.path, singleFile.name, () => {
+                // Cleanup
+                for(const file of generatedFiles) if(fs.existsSync(file.path)) fs.unlinkSync(file.path);
                 for(const file of photos) fs.unlinkSync(file.path);
                 if(csvFile) fs.unlinkSync(csvFile.path);
                 if(logo) fs.unlinkSync(logo.path);
+                if(fontFile) fs.unlinkSync(fontFile.path);
             });
-        });
+        } else {
+            // Create Zip for JPGs
+            const zipPath = path.join(__dirname, 'banners.zip');
+            const output = fs.createWriteStream(zipPath);
+            const archive = archiver('zip', { zlib: { level: 9 } });
 
-        archive.pipe(output);
-        for (const file of generatedFiles) {
-            archive.file(file.path, { name: file.name });
+            output.on('close', function() {
+                res.download(zipPath, 'Felicitation_Banners.zip', () => {
+                    // Cleanup
+                    if(fs.existsSync(zipPath)) fs.unlinkSync(zipPath);
+                    for(const file of generatedFiles) if(fs.existsSync(file.path)) fs.unlinkSync(file.path);
+                    for(const file of photos) fs.unlinkSync(file.path);
+                    if(csvFile) fs.unlinkSync(csvFile.path);
+                    if(logo) fs.unlinkSync(logo.path);
+                    if(fontFile) fs.unlinkSync(fontFile.path);
+                });
+            });
+
+            archive.pipe(output);
+            for (const file of generatedFiles) {
+                archive.file(file.path, { name: file.name });
+            }
+            await archive.finalize();
         }
-        await archive.finalize();
 
     } catch (err) {
         console.error(err);
-        res.status(500).send('An error occurred during banner generation.');
+        res.status(500).send('An error occurred during generation.');
     }
 });
 

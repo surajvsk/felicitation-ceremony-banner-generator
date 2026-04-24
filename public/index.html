@@ -92,9 +92,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mt-2">
-                        <label for="logo">School Logo (Optional)</label>
-                        <input type="file" name="logo" accept="image/*" class="basic-file-input">
+                    <div class="grid-3 mt-2">
+                        <div class="input-group">
+                            <label for="exportFormat">Export Format</label>
+                            <select name="exportFormat" id="exportFormat">
+                                <option value="jpg">Multiple Images (JPG Zip)</option>
+                                <option value="pdf">Single Document (Multi-page PDF)</option>
+                                <option value="gif">Video Slideshow (Animated GIF)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="logo">School Logo (Optional)</label>
+                            <input type="file" name="logo" accept="image/*" class="basic-file-input">
+                        </div>
+                        <div class="input-group">
+                            <label for="fontFile">Custom Title Font (.ttf)</label>
+                            <input type="file" name="fontFile" accept=".ttf,.otf" class="basic-file-input">
+                        </div>
                     </div>
                 </section>
 
