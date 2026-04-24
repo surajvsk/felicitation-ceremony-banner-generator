@@ -1,0 +1,38 @@
+# Dependency directories
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Output/Generated banners
+banner_part_*.jpg
+final_collage*.jpg
+output-collage.jpg
+
+# Original Photos
+# It's a good practice to ignore the raw photos directory so large files 
+# aren't accidentally committed to Git. If you DO want to commit them, 
+# simply remove or comment out the line below.
+photos/
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
