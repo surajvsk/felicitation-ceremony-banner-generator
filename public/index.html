@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felicitation Banner Generator Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon">🏆</div>
+                <div>
+                    <h1>Felicitation Pro</h1>
+                    <p>Automated High-Res Banner Generator</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <form id="generatorForm" action="/generate" method="POST" enctype="multipart/form-data">
+                
+                <section class="card upload-section">
+                    <h2><span class="step-num">1</span> Upload Assets</h2>
+                    <div class="grid-2">
+                        <div class="file-drop-area">
+                            <span class="icon">📷</span>
+                            <h3>Student Photos</h3>
+                            <p>Select multiple images (.jpg, .png)</p>
+                            <input type="file" name="photos" id="photos" multiple required accept="image/*">
+                            <span class="file-msg" id="photo-count">0 photos selected</span>
+                        </div>
+                        <div class="file-drop-area">
+                            <span class="icon">📊</span>
+                            <h3>Data CSV (Optional)</h3>
+                            <p>filename, name, marks</p>
+                            <input type="file" name="csvFile" accept=".csv">
+                            <span class="file-msg">No CSV selected</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card config-section">
+                    <h2><span class="step-num">2</span> Customize Text</h2>
+                    <div class="input-group">
+                        <label for="schoolName">School / Organization Name</label>
+                        <input type="text" id="schoolName" name="schoolName" placeholder="Enter school name in Hindi or English" value="डा, राजेन्द्र प्रसाद यादव इण्टर कालेज बारीगांव नेवादा मड़ियाहूं जौनपुर">
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label for="title">Main Title</label>
+                            <input type="text" id="title" name="title" value="FELICITATION CEREMONY">
+                        </div>
+                        <div class="input-group">
+                            <label for="subtitle">Subtitle</label>
+                            <input type="text" id="subtitle" name="subtitle" value="HONORING OUR ACHIEVERS">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="managerDetails">Manager / Contact Details</label>
+                        <input type="text" id="managerDetails" name="managerDetails" value="प्रबन्धक / संचालक - श्री परमानन्द यादव 6393021858">
+                    </div>
+                </section>
+
+                <section class="card design-section">
+                    <h2><span class="step-num">3</span> Design & Layout</h2>
+                    <div class="grid-3">
+                        <div class="input-group">
+                            <label for="theme">Theme Style</label>
+                            <select name="theme" id="theme">
+                                <option value="royal">Royal Blue & Gold</option>
+                                <option value="republic">Republic Day (Tricolor)</option>
+                                <option value="modern">Modern Dark</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="size">Export Size</label>
+                            <select name="size" id="size">
+                                <option value="banner">Flex Banner (4K, 3 Photos)</option>
+                                <option value="story">Instagram Story (9:16, 2 Photos)</option>
+                                <option value="instagram">Instagram Square (1:1, 1 Photo)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Extras</label>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="watermark" name="watermark" value="true">
+                                <label for="watermark">Add Watermark</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mt-2">
+                        <label for="logo">School Logo (Optional)</label>
+                        <input type="file" name="logo" accept="image/*" class="basic-file-input">
+                    </div>
+                </section>
+
+                <div class="action-area">
+                    <button type="submit" id="submitBtn" class="btn-primary">
+                        <span class="btn-text">Generate & Download Banners (ZIP)</span>
+                        <div class="spinner" id="spinner"></div>
+                    </button>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+    <script>
+        // Update photo count
+        document.getElementById('photos').addEventListener('change', function(e) {
+            const count = e.target.files.length;
+            document.getElementById('photo-count').textContent = count + ' photos selected';
+        });
+
+        // Add loading state
+        document.getElementById('generatorForm').addEventListener('submit', function() {
+            document.getElementById('submitBtn').classList.add('loading');
+            document.querySelector('.btn-text').textContent = 'Generating High-Res Assets...';
+            
+            // Remove loading state after roughly 5 seconds (assuming download starts)
+            setTimeout(() => {
+                document.getElementById('submitBtn').classList.remove('loading');
+                document.querySelector('.btn-text').textContent = 'Generate & Download Banners (ZIP)';
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

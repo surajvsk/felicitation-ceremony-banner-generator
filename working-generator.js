@@ -76,7 +76,7 @@ async function createBanners() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         ctx.font = 'bold 80px sans-serif'; 
-        ctx.fillText('डा, राजेन्द्र प्रसाद यादव इण्टर कालेज बारीगांव नेवादा मड़ियाहूं जौनपुर', width / 2, 200);
+        ctx.fillText('डा, राजेन्द्र प्रसाद यादव इण्टर कालेज बारीगांव नेवादा मड़ियाहूं जौनपुर', width / 2, 200, width - 200);
         ctx.restore();
 
         // Ceremony Title (Golden Gradient Text)
@@ -93,7 +93,7 @@ async function createBanners() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         ctx.font = 'bold 160px serif';
-        ctx.fillText('FELICITATION CEREMONY', width / 2, 310);
+        ctx.fillText('FELICITATION CEREMONY', width / 2, 310, width - 200);
         ctx.restore();
 
         // Honoring achievers subtitle
@@ -102,7 +102,7 @@ async function createBanners() {
         ctx.textBaseline = 'top';
         ctx.font = 'bold 70px sans-serif';
         // Simple letter spacing simulation
-        ctx.fillText('H O N O R I N G   O U R   A C H I E V E R S', width / 2, 490);
+        ctx.fillText('H O N O R I N G   O U R   A C H I E V E R S', width / 2, 490, width - 200);
 
         // Star / Diamond decorative separator
         ctx.save();
@@ -118,7 +118,7 @@ async function createBanners() {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.font = 'bold 60px sans-serif';
-        ctx.fillText('प्रबन्धक / संचालक - श्री परमानन्द यादव 6393021858', width / 2, height - 70);
+        ctx.fillText('प्रबन्धक / संचालक - श्री परमानन्द यादव 6393021858', width / 2, height - 70, width - 200);
 
         // 4. Layout Photos (3 photos in a row)
         const positions = [
