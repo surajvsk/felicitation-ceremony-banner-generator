@@ -26,7 +26,7 @@ app.post('/generate', upload.fields([
     { name: 'fontFile', maxCount: 1 }
 ]), async (req, res) => {
     try {
-        const { schoolName, title, subtitle, managerDetails, theme, size, watermark, exportFormat } = req.body;
+        const { schoolName, title, subtitle, managerDetails, theme, size, watermark, watermarkText, exportFormat } = req.body;
         
         const photos = req.files['photos'] || [];
         const csvFile = req.files['csvFile'] ? req.files['csvFile'][0] : null;
@@ -67,6 +67,7 @@ app.post('/generate', upload.fields([
             theme,
             size,
             watermark,
+            watermarkText,
             exportFormat: exportFormat || 'jpg',
             outputDir
         });

@@ -15,6 +15,7 @@ async function generateBanners({
     theme,
     size,
     watermark,
+    watermarkText,
     exportFormat,
     outputDir
 }) {
@@ -268,7 +269,7 @@ async function generateBanners({
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.font = `bold ${400 * scaleText}px sans-serif`;
-            ctx.fillText('SAMPLE COPY', 0, 0);
+            ctx.fillText(watermarkText || 'SAMPLE COPY', 0, 0);
             ctx.restore();
         }
 

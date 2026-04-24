@@ -85,10 +85,12 @@
                             </select>
                         </div>
                         <div class="input-group">
-                            <label>Extras</label>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="watermark" name="watermark" value="true">
-                                <label for="watermark">Add Watermark</label>
+                            <label>Watermark</label>
+                            <div style="display: flex; gap: 10px;">
+                                <div class="checkbox-group" style="padding: 0 10px;">
+                                    <input type="checkbox" id="watermark" name="watermark" value="true" title="Enable Watermark">
+                                </div>
+                                <input type="text" id="watermarkText" name="watermarkText" placeholder="Text" value="SAMPLE COPY" style="flex: 1;">
                             </div>
                         </div>
                     </div>
